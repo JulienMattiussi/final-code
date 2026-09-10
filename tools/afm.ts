@@ -24,6 +24,7 @@ const FAMILIES = [
 ]
 
 /** Noms de glyphes AFM pour les codes ASCII 32 à 126, dans l'ordre. */
+// prettier-ignore
 const ASCII_NAMES = [
   'space', 'exclam', 'quotedbl', 'numbersign', 'dollar', 'percent', 'ampersand',
   'quotesingle', 'parenleft', 'parenright', 'asterisk', 'plus', 'comma', 'hyphen',
@@ -41,6 +42,7 @@ const ASCII_NAMES = [
  * exactement le jeu que le PDF pourra écrire sans embarquer de police. Le
  * français y tient en entier, guillemets et apostrophe typographique compris.
  */
+// prettier-ignore
 const EXTRA_NAMES: Record<number, string> = {
   0x20ac: 'Euro', 0x201a: 'quotesinglbase', 0x0192: 'florin', 0x201e: 'quotedblbase',
   0x2026: 'ellipsis', 0x2020: 'dagger', 0x2021: 'daggerdbl', 0x02c6: 'circumflex',

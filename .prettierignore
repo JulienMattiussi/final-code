@@ -1,3 +1,6 @@
 dist
 node_modules
 coverage
+
+# Généré par `make afm` : la table est écrite compacte pour rester lisible en diff
+src/lib/fonts.ts

@@ -24,7 +24,11 @@ describe('App', () => {
 
     expect(sheet()).toHaveAttribute('viewBox', '0 0 210 297')
     expect(texts()).toContain('A1')
-    expect(texts()).toContain('A12')
+    expect(texts()).toContain('A6')
+    // Deux séries de codes dans l'exemple : elles doivent arriver telles quelles
+    // sur la feuille, sans renumérotation.
+    expect(texts()).toContain('K1')
+    expect(texts()).toContain('K6')
   })
 
   it('laisse les cases vides et n’écrit les mots que sur demande', async () => {
@@ -40,6 +44,14 @@ describe('App', () => {
       'aria-pressed',
       'true',
     )
+  })
+
+  it('offre les trois sorties', () => {
+    render(<App />)
+
+    for (const name of ['PDF', 'SVG', 'Imprimer']) {
+      expect(screen.getByRole('button', { name })).toBeInTheDocument()
+    }
   })
 
   it('récapitule où chaque mot est tombé', () => {

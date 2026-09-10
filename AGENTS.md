@@ -41,7 +41,11 @@ src/
 │   ├── messages.ts           # Les diagnostics en français
 │   ├── refs.ts               # Références manquantes ou en double
 │   ├── layout.ts             # Géométrie de la feuille, en millimètres
-│   ├── svg.ts                # Rendu de la feuille (aperçu, export, impression)
+│   ├── style.ts              # Palette et proportions, partagées SVG / PDF
+│   ├── logo.ts               # La marque, source unique de l'en-tête et du favicon
+│   ├── fonts.ts              # Métriques Helvetica (généré par `make afm`)
+│   ├── svg.ts                # Rendu de la feuille (aperçu et impression)
+│   ├── pdf.ts                # Export PDF, écrit à la main
 │   └── settings.ts           # Réglages et exemple de départ
 ├── components/               # Composants réutilisables
 ├── platform/                 # Le seul code qui touche au navigateur
@@ -49,7 +53,12 @@ src/
 ├── main.tsx                  # Point d'entrée
 └── index.css                 # Tailwind + thème (fond, règles d'impression)
 public/
-└── favicon.svg
+├── favicon.svg               # Généré par `make favicon`
+└── og.png                    # Généré par `make og`
+tools/
+├── afm.ts                    # Régénère fonts.ts depuis les AFM d'URW base35
+├── favicon.ts                # Régénère public/favicon.svg depuis logo.ts
+└── og.ts                     # Régénère public/og.png (nécessite google-chrome)
 tests/
 ├── setup.ts                  # jest-dom
 ├── unit/                     # Vitest - logique pure
@@ -96,8 +105,12 @@ Le moteur raisonne en **millimètres de papier**, jamais en pixels : la seule un
 qui dise si on peut encore écrire une lettre à la main dans une case est sa taille
 imprimée (`MIN_CELL_MM`, 6 mm). `layout.ts` déduit la taille de case de la place
 restante, réserve devant la colonne 0 le blanc de l'étiquette, et centre le tout.
-`svg.ts` est le **seul rendu**, partagé par l'aperçu, l'export et l'impression :
-ce qui est vu à l'écran est exactement ce qui sort de l'imprimante.
+Le blanc qui reste est partagé au-dessus du titre et sous la grille : c'est le
+**bloc entier** qui est centré, pas la seule grille, sans quoi le titre restait
+seul en haut de page, séparé de ce qu'il annonce par une bande vide.
+`svg.ts` rend l'aperçu et l'impression du navigateur, `pdf.ts` l'export : les deux
+lisent les mêmes constantes dans `style.ts` et les mêmes largeurs dans `fonts.ts`,
+donc ce qui est vu à l'écran est ce qui sort de l'imprimante.
 
 La colonne solution est **teintée et cerclée d'un trait épais** : teintée
 seulement, elle disparaîtrait à l'impression en noir et blanc.
@@ -110,6 +123,31 @@ régulier, `rowOffsets` est le seul endroit qui décide où tombe une ligne, et
 juste. La colonne solution reçoit **un cadre par groupe**, sinon le trait
 enjamberait le blanc.
 
+### Export PDF, la seule sortie maîtrisée
+Une page web **ne peut pas** empêcher le navigateur d'ajouter ses en-têtes, sa
+pagination et son échelle à l'impression : c'est un réglage du dialogue, hors de
+portée du document. D'où `pdf.ts`, qui écrit un PDF A4 directement, sans aucune
+bibliothèque : cases à coins arrondis en courbes de Bézier, texte en Helvetica et
+Helvetica-Bold (deux des quatorze polices que tout lecteur possède, donc rien à
+embarquer).
+
+Les décalages de la table `xref` sont des positions d'octets **exactes**, ce que
+les tests vérifient en relisant le fichier produit. Tout est écrit en ASCII, un
+caractère vaut donc un octet : c'est pourquoi les accents sortent en échappement
+octal plutôt qu'en octet brut.
+
+`style.ts` porte la palette et les proportions, et `fonts.ts` les largeurs de
+glyphes : les deux rendus s'y réfèrent, donc l'aperçu ne peut pas s'écarter du
+PDF. La ligne de base d'une lettre dans sa case est **déduite** de la hauteur de
+capitale, pas réglée à l'oeil.
+
+Pour contrôler le résultat :
+
+```sh
+pdfinfo grille.pdf                 # 1 page, 595.28 x 841.89 pts (A4)
+pdftoppm -r 90 -png grille.pdf /tmp/page
+```
+
 ### Mise en page d'impression
 La feuille doit tenir sur **une seule page**, d'où la borne `max-height: 96vh` sur
 le SVG dans `index.css` (la marge couvre les en-têtes que le navigateur ajoute de
@@ -121,6 +159,26 @@ google-chrome --headless=new --no-pdf-header-footer \
   --print-to-pdf=/tmp/p.pdf http://localhost:2277/
 pdfinfo /tmp/p.pdf | grep Pages     # doit afficher 1
 ```
+
+---
+
+## La marque et le partage
+
+La marque est le sujet réduit à ce qui survit à seize pixels : trois lignes de
+cases décalées et la colonne solution qui les traverse. Elle vit dans
+`src/lib/logo.ts`, **une seule fois** : l'en-tête la dessine en React, `make
+favicon` en écrit `public/favicon.svg`. Recopiée à la main, la deuxième version
+dérivait dès la première retouche.
+
+`make og` régénère `public/og.png` (1200 x 630). Ce n'est pas une maquette : la
+feuille montrée est une **vraie grille**, résolue par `solve.ts` et rendue par
+`svg.ts`. Une image dessinée à la main finirait par promettre autre chose que ce
+que le produit fait. Elle est montrée **remplie**, la seule version qui explique
+le principe sans une ligne de texte.
+
+Les URL d'images de partage sont **relatives**, comme `base: './'` : le site doit
+pouvoir être servi depuis n'importe quel domaine ou sous-répertoire sans qu'on ait
+à reconstruire pour corriger une adresse absolue.
 
 ---
 
@@ -168,6 +226,9 @@ pdfinfo /tmp/p.pdf | grep Pages     # doit afficher 1
 | `make preview` | Sert le build de production |
 | `make lint` | ESLint |
 | `make knip` | Détecte fichiers / exports / dépendances inutilisés |
+| `make afm` | Régénère `src/lib/fonts.ts` depuis les fichiers AFM |
+| `make favicon` | Régénère `public/favicon.svg` depuis `src/lib/logo.ts` |
+| `make og` | Régénère `public/og.png` (nécessite google-chrome) |
 | `make format` | Formate avec Prettier |
 | `make typecheck` | Vérifie les types |
 | `make test` | Tests unitaires et composants |

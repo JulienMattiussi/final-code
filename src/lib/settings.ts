@@ -12,6 +12,8 @@ export interface Settings {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
+  // Deux séries de codes plutôt qu'une seule qui court : c'est ainsi qu'on
+  // référence deux zones de jeu, et ça montre d'entrée que les codes sont libres.
   list: [
     'A1 ballon',
     'A2 gateau',
@@ -19,12 +21,12 @@ export const DEFAULT_SETTINGS: Settings = {
     'A4 cadeau',
     'A5 confetti',
     'A6 guirlande',
-    'A7 invitation',
-    'A8 surprise',
-    'A9 chapeau',
-    'A10 bonbon',
-    'A11 musique',
-    'A12 serpentin',
+    'K1 invitation',
+    'K2 surprise',
+    'K3 chapeau',
+    'K4 bonbon',
+    'K5 musique',
+    'K6 serpentin',
   ].join('\n'),
   solution: 'anniversaire',
   title: 'Le mot mystère',

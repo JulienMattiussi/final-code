@@ -1,38 +1,43 @@
-/**
- * La marque reprend le sujet : trois cases alignées, celle du milieu cerclée
- * comme la colonne solution. Le dessin est celui du favicon, aux couleurs près.
- */
+import { MARK, plainCells } from '@/lib/logo'
+
 export function Logo({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" className={className} aria-hidden="true" focusable="false">
+    <svg
+      viewBox={`0 0 ${MARK.box} ${MARK.box}`}
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {plainCells().map((cell) => (
+        <rect
+          key={`${cell.x}-${cell.y}`}
+          x={cell.x}
+          y={cell.y}
+          width={MARK.cell}
+          height={MARK.cell}
+          rx={MARK.radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          opacity="0.45"
+        />
+      ))}
+
       <rect
-        x="6"
-        y="14"
-        width="16"
-        height="16"
-        rx="3"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
+        x={MARK.axis.x}
+        y={MARK.axis.y}
+        width={MARK.axis.width}
+        height={MARK.axis.height}
+        rx={MARK.radius}
+        fill="currentColor"
+        opacity="0.12"
       />
-      <rect x="24" y="14" width="16" height="16" rx="3" fill="currentColor" opacity="0.15" />
       <rect
-        x="42"
-        y="14"
-        width="16"
-        height="16"
-        rx="3"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-      />
-      <rect x="24" y="34" width="16" height="16" rx="3" fill="currentColor" opacity="0.15" />
-      <rect
-        x="23"
-        y="13"
-        width="18"
-        height="38"
-        rx="4"
+        x={MARK.axis.x}
+        y={MARK.axis.y}
+        width={MARK.axis.width}
+        height={MARK.axis.height}
+        rx={MARK.radius}
         fill="none"
         stroke="currentColor"
         strokeWidth="3.5"

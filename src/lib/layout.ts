@@ -100,12 +100,20 @@ export function layoutFor(grid: Grid, content: SheetContent): Layout {
   )
   const blockWidth = (grid.columns + LABEL_RATIO) * cellMm
 
+  /**
+   * Le blanc qui reste est partagé au-dessus du titre et sous la grille, et non
+   * glissé entre les deux : c'est le bloc entier qui est centré. Centrer la
+   * seule grille laissait le titre seul en haut de page, séparé de ce qu'il
+   * annonce par une bande vide qui se lisait comme un oubli.
+   */
+  const slack = (usableHeight - units * cellMm) / 2
+
   return {
     cellMm,
     labelMm: LABEL_RATIO * cellMm,
     gridX: MARGIN_MM + (usableWidth - blockWidth) / 2 + LABEL_RATIO * cellMm,
-    gridY: cursor + (usableHeight - units * cellMm) / 2,
-    titleY,
-    noteY,
+    gridY: cursor + slack,
+    titleY: titleY === null ? null : titleY + slack,
+    noteY: noteY === null ? null : noteY + slack,
   }
 }

@@ -36,6 +36,7 @@ const KAPPA = 0.5523
  * Les caractères que WinAnsiEncoding place hors de Latin-1, entre 0x80 et 0x9F.
  * Partout ailleurs le codage se confond avec Latin-1.
  */
+// prettier-ignore
 const WIN_ANSI: Record<number, number> = {
   0x20ac: 0x80, 0x201a: 0x82, 0x0192: 0x83, 0x201e: 0x84, 0x2026: 0x85, 0x2020: 0x86,
   0x2021: 0x87, 0x02c6: 0x88, 0x2030: 0x89, 0x0160: 0x8a, 0x2039: 0x8b, 0x0152: 0x8c,
@@ -49,13 +50,28 @@ export function renderPdf(grid: Grid, options: SheetOptions): Uint8Array<ArrayBu
   const cell = layout.cellMm
   const offsets = rowOffsets(grid.groups)
 
-  const body: string[] = [`${colour(PALETTE.paper)} rg`, `0 0 ${pt(PAGE.widthMm)} ${pt(PAGE.heightMm)} re f`]
+  const body: string[] = [
+    `${colour(PALETTE.paper)} rg`,
+    `0 0 ${pt(PAGE.widthMm)} ${pt(PAGE.heightMm)} re f`,
+  ]
 
   if (layout.titleY !== null) {
-    body.push(text(options.title, HELVETICA_BOLD, TITLE_MM, PAGE.widthMm / 2, layout.titleY, 0.5, PALETTE.ink))
+    body.push(
+      text(
+        options.title,
+        HELVETICA_BOLD,
+        TITLE_MM,
+        PAGE.widthMm / 2,
+        layout.titleY,
+        0.5,
+        PALETTE.ink,
+      ),
+    )
   }
   if (layout.noteY !== null) {
-    body.push(text(options.note, HELVETICA, NOTE_MM, PAGE.widthMm / 2, layout.noteY, 0.5, PALETTE.label))
+    body.push(
+      text(options.note, HELVETICA, NOTE_MM, PAGE.widthMm / 2, layout.noteY, 0.5, PALETTE.label),
+    )
   }
 
   grid.rows.forEach((row, index) => {
@@ -125,7 +141,13 @@ export function renderPdf(grid: Grid, options: SheetOptions): Uint8Array<ArrayBu
  * `rx` du SVG. Le PDF n'a pas d'arc : quatre courbes de Bézier en tiennent lieu,
  * à un demi-millième de rayon près.
  */
-function box(xMm: number, topMm: number, widthMm: number, heightMm: number, radiusMm: number): string {
+function box(
+  xMm: number,
+  topMm: number,
+  widthMm: number,
+  heightMm: number,
+  radiusMm: number,
+): string {
   const x0 = pt(xMm)
   const x1 = pt(xMm + widthMm)
   // L'origine du PDF est en bas à gauche et son axe vertical monte, donc le haut

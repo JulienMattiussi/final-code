@@ -21,6 +21,15 @@ lint: ## Run ESLint
 knip: ## Find unused files, exports and dependencies
 	npm run knip
 
+afm: ## Regenerate src/lib/fonts.ts from the URW base35 AFM files
+	npm run afm
+
+favicon: ## Regenerate public/favicon.svg from src/lib/logo.ts
+	npm run favicon
+
+og: ## Regenerate the social share image public/og.png (requires google-chrome)
+	npm run og
+
 format: ## Format code with Prettier
 	npm run format
 

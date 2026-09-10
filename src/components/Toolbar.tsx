@@ -48,13 +48,7 @@ function Button({
   )
 }
 
-export function Toolbar({
-  solution,
-  onSolution,
-  onExportSvg,
-  onExportPdf,
-  onPrint,
-}: ToolbarProps) {
+export function Toolbar({ solution, onSolution, onExportSvg, onExportPdf, onPrint }: ToolbarProps) {
   return (
     <div className="flex flex-wrap items-end gap-x-6 gap-y-3">
       <Group label="Affichage">
