@@ -7,10 +7,13 @@
 **Une liste de mots, une solution à trouver, et une feuille A4 à imprimer : les
 mots se placent tout seuls pour qu'une colonne verticale épelle la solution.**
 
+[**Ouvrir l'application**](https://final-code-grid.vercel.app) &nbsp;·&nbsp;
 [Comment ça marche](#ce-que-ça-fait) &nbsp;·&nbsp;
 [Documentation technique](AGENTS.md)
 
-<img src="public/og.png" width="820" alt="Une grille de mots en escalier dont la colonne encadrée épelle « le grand large ».">
+<a href="https://final-code-grid.vercel.app">
+  <img src="public/og.png" width="820" alt="Une grille de mots en escalier dont la colonne encadrée épelle « le grand large ».">
+</a>
 
 <sub>
   100 % front-end &nbsp;·&nbsp; React 19 + TypeScript &nbsp;·&nbsp;
@@ -53,6 +56,8 @@ le mot qui ne sert à rien, ou les lignes qui se disputent le même mot.
 ---
 
 ## Démarrer
+
+Le site est en ligne : **[final-code-grid.vercel.app](https://final-code-grid.vercel.app)**. En local :
 
 ```sh
 make install
