@@ -1,0 +1,33 @@
+{
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/flag-added-comments.py\""
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "Bash(make build)",
+      "Bash(make check)",
+      "Bash(make check *)",
+      "Bash(make knip)",
+      "Bash(make lint)",
+      "Bash(make test)",
+      "Bash(make test *)",
+      "Bash(make typecheck)"
+    ]
+  }
+}
