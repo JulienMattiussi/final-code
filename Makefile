@@ -6,7 +6,7 @@ help: ## Display available commands
 install: ## Install all dependencies
 	npm install
 
-start: ## Start application in development (http://localhost:4242)
+start: ## Start application in development (http://localhost:2277)
 	npm run dev
 
 build: ## Build application for production

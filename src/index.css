@@ -1,1 +1,47 @@
 @import 'tailwindcss';
+
+/*
+  Le fond est un quadrillage très pâle : le sujet de l'application est la grille,
+  et ça suffit à sortir la page du gris uniforme sans rien lui disputer. Les
+  cartes sont opaques, elles le masquent là où on lit.
+*/
+body {
+  background-color: #f8fafc;
+  background-image:
+    linear-gradient(to right, #eaeef5 1px, transparent 1px),
+    linear-gradient(to bottom, #eaeef5 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* À l'impression, seule la feuille doit rester : ni réglages, ni récapitulatif. */
+@media print {
+  @page {
+    margin: 0;
+  }
+
+  html,
+  body {
+    background: #ffffff;
+    /* Le quadrillage se confondrait avec les cases à remplir. */
+    background-image: none;
+  }
+
+  /*
+    La feuille doit tenir sur UNE page. Sans borne de hauteur, un format portrait
+    dépasse de quelques millimètres et le navigateur ajoute une seconde page,
+    vide. La marge de sécurité couvre les en-têtes et pieds de page que le
+    navigateur ajoute de lui-même, en dehors de notre contrôle.
+
+    Ciblé sur la feuille : les autres SVG de la page (la marque) ne doivent pas
+    être redimensionnés. Le SVG porte déjà ses propres marges, d'où `@page` à
+    zéro : les cumuler rétrécirait la grille pour rien.
+  */
+  .sheet svg {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 96vh;
+  }
+}
