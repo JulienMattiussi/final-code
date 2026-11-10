@@ -84,7 +84,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEI
     <text x="80" y="368" font-size="23" fill="${MUTED}">Les mots se placent tout seuls pour qu&apos;une colonne</text>
     <text x="80" y="402" font-size="23" fill="${MUTED}">verticale épelle le mot, ou la phrase, à trouver.</text>
     <text x="80" y="466" font-size="23" fill="${MUTED}">Chaque ligne porte son code : A1, K3, ...</text>
-    <text x="80" y="546" font-size="21" fill="${ACCENT}">final-code-grid.vercel.app</text>
+    <text x="80" y="546" font-size="21" fill="${ACCENT}">final-code-grid.yavadeus.dev</text>
   </g>
 
   <svg x="${SHEET.x}" y="${SHEET.y}" width="${round(SHEET.width)}" height="${SHEET.height}" viewBox="0 0 210 297">

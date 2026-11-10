@@ -178,7 +178,7 @@ le principe sans une ligne de texte.
 
 Les robots des réseaux sociaux ne suivent pas les chemins relatifs : `og:url`,
 `og:image` et `twitter:image` portent donc l'adresse **absolue** du site public,
-https://final-code-grid.vercel.app, en dur dans `index.html`. C'est indépendant de
+https://final-code-grid.yavadeus.dev, en dur dans `index.html`. C'est indépendant de
 `base: './'`, qui concerne les fichiers que la page charge elle-même, pas ce que
 les robots vont chercher. L'adresse apparaît à trois endroits : `index.html`,
 `tools/og.ts` (elle est écrite sur l'image) et le README.

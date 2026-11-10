@@ -7,11 +7,11 @@
 **Une liste de mots, une solution à trouver, et une feuille A4 à imprimer : les
 mots se placent tout seuls pour qu'une colonne verticale épelle la solution.**
 
-[**Ouvrir l'application**](https://final-code-grid.vercel.app) &nbsp;·&nbsp;
+[**Ouvrir l'application**](https://final-code-grid.yavadeus.dev) &nbsp;·&nbsp;
 [Comment ça marche](#ce-que-ça-fait) &nbsp;·&nbsp;
 [Documentation technique](AGENTS.md)
 
-<a href="https://final-code-grid.vercel.app">
+<a href="https://final-code-grid.yavadeus.dev">
   <img src="public/og.png" width="820" alt="Une grille de mots en escalier dont la colonne encadrée épelle « le grand large ».">
 </a>
 
@@ -57,7 +57,7 @@ le mot qui ne sert à rien, ou les lignes qui se disputent le même mot.
 
 ## Démarrer
 
-Le site est en ligne : **[final-code-grid.vercel.app](https://final-code-grid.vercel.app)**. En local :
+Le site est en ligne : **[final-code-grid.yavadeus.dev](https://final-code-grid.yavadeus.dev)**. En local :
 
 ```sh
 make install

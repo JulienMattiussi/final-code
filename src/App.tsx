@@ -13,6 +13,7 @@ import { renderPdf } from '@/lib/pdf'
 import { solve } from '@/lib/solve'
 import { renderSheet } from '@/lib/svg'
 import { download } from '@/platform/download'
+import { SeeAlso } from '@/components/SeeAlso'
 
 /**
  * Le titre est rattaché à la section par `aria-labelledby`, sans quoi celle-ci
@@ -127,6 +128,8 @@ export default function App() {
             )}
           </main>
         </div>
+
+        <SeeAlso current="final-code" />
 
         <footer className="mt-10 text-center text-sm text-slate-500 print:hidden">
           <a

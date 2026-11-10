@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://final-code-grid.yavadeus.dev/sitemap.xml
